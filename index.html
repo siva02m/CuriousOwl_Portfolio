@@ -113,7 +113,7 @@
     color: var(--label);
   }
 
-  /* Header */
+  /* Header & Navigation */
   body::before {
     content: "";
     position: fixed;
@@ -125,9 +125,10 @@
   header.site {
     position: sticky;
     top: env(safe-area-inset-top, 0px);
-    z-index: 10;
-    background: color-mix(in srgb, var(--paper) 92%, transparent);
-    backdrop-filter: blur(8px);
+    z-index: 100;
+    background: color-mix(in srgb, var(--paper) 95%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   .nav-row {
     display: flex;
@@ -148,10 +149,12 @@
     align-items: center;
     gap: 9px;
     text-decoration: none;
+    flex-shrink: 0;
   }
   .brand svg { width: 26px; height: 26px; flex-shrink: 0; color: var(--label); }
   nav.links {
     display: flex;
+    align-items: center;
     gap: 24px;
     font-family: var(--font-display);
     font-size: 14px;
@@ -159,9 +162,155 @@
     color: var(--ink-soft);
     min-width: 0;
   }
-  nav.links a { text-decoration: none; white-space: nowrap; }
+  nav.links a { text-decoration: none; white-space: nowrap; transition: color 0.15s ease; }
   nav.links a:hover { color: var(--label); }
-  @media (max-width: 640px) { nav.links .opt { display: none; } }
+
+  /* Mobile Hamburger Toggle */
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    margin-right: -6px;
+    cursor: pointer;
+    color: var(--ink);
+    border-radius: 6px;
+    position: relative;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .nav-toggle:focus-visible {
+    outline: 2px solid var(--label);
+    outline-offset: 2px;
+  }
+  .nav-toggle .bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), opacity 0.2s ease;
+    transform-origin: center;
+  }
+  .nav-toggle[aria-expanded="true"] .bar-top {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] .bar-mid {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .nav-toggle[aria-expanded="true"] .bar-bot {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Slide-down Mobile Menu Sheet */
+  .mobile-menu {
+    display: none;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 16px 32px -8px rgba(22, 15, 28, 0.12);
+    animation: menuSlide 0.25s cubic-bezier(0.2, 0, 0, 1) forwards;
+  }
+  @keyframes menuSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 0 6px;
+    gap: 2px;
+  }
+  .mobile-nav a {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 12px 14px;
+    border-radius: 8px;
+    transition: background 0.15s ease, color 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mobile-nav a:hover,
+  .mobile-nav a:active {
+    background: var(--accent-soft);
+    color: var(--label);
+  }
+  .mobile-nav a.active {
+    color: var(--ink);
+    background: var(--accent-soft);
+    font-weight: 700;
+  }
+  .mobile-nav a::after {
+    content: "→";
+    font-size: 14px;
+    color: var(--ink-faint);
+    transition: transform 0.15s ease;
+  }
+  .mobile-nav a:hover::after {
+    transform: translateX(3px);
+    color: var(--label);
+  }
+  .mobile-menu-cta {
+    padding: 10px 0 20px;
+    border-top: 1px solid var(--line);
+    margin-top: 6px;
+  }
+  .mobile-menu-cta .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 20px;
+    font-size: 15px;
+  }
+
+  /* Responsive Switch at <= 768px */
+  @media (max-width: 768px) {
+    .desktop-nav {
+      display: none !important;
+    }
+    .nav-toggle {
+      display: flex;
+    }
+    .mobile-menu:not([hidden]) {
+      display: block;
+    }
+    body {
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+    .nav-row {
+      padding-block: 14px;
+    }
+    .brand {
+      font-size: 18px;
+    }
+    .brand svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  @media (max-width: 380px) {
+    body {
+      padding-left: max(12px, env(safe-area-inset-left, 0px));
+      padding-right: max(12px, env(safe-area-inset-right, 0px));
+    }
+    .brand {
+      font-size: 16.5px;
+    }
+  }
 
   section { padding-block: 88px; }
   .sec-head { max-width: 680px; margin-bottom: 44px; }
@@ -179,12 +328,14 @@
   .hero { padding-block: 84px 72px; }
   .hero h1 {
     margin-top: 20px;
-    font-size: clamp(44px, 8vw, 100px);
+    font-size: clamp(32px, 8.5vw, 100px);
     font-weight: 800;
     font-stretch: 108%;
-    line-height: 0.96;
+    line-height: 0.98;
     letter-spacing: -0.03em;
     max-width: 12ch;
+    overflow-wrap: break-word;
+    word-break: normal;
   }
   .hero h1 em, .mark {
     font-style: normal;
@@ -194,6 +345,23 @@
     box-decoration-break: clone;
     padding-inline: 4px;
     margin-inline: -4px;
+  }
+  @media (max-width: 640px) {
+    .hero { padding-block: 48px 36px; }
+    .hero h1 {
+      font-size: clamp(30px, 9vw, 44px);
+      line-height: 1.02;
+      max-width: 100%;
+    }
+  }
+  @media (max-width: 400px) {
+    .hero h1 em, .mark {
+      padding-inline: 2px;
+      margin-inline: 0;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 8.5vw, 36px);
+    }
   }
   .hero .lede {
     margin-top: 28px;
@@ -661,13 +829,35 @@
       </svg>
       Curious Owl
     </a>
-    <nav class="links">
+    <nav class="links desktop-nav" aria-label="Primary navigation">
       <a href="#services">What we do</a>
       <a href="portfolio.html">Portfolio</a>
-      <a class="opt" href="#sectors">Who we work with</a>
-      <a class="opt" href="#team">Team</a>
+      <a href="#sectors">Who we work with</a>
+      <a href="#team">Team</a>
       <a href="#contact">Contact</a>
     </nav>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="bar bar-top"></span>
+      <span class="bar bar-mid"></span>
+      <span class="bar bar-bot"></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="wrap">
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="#services">What we do</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="#sectors">Who we work with</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="mobile-menu-cta">
+        <a class="btn" href="#contact">
+          Start a Conversation
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -814,41 +1004,57 @@
       <p>Real learning engineering builds, structured by the friction point, our approach, and verifiable outcomes.</p>
     </div>
 
-    <div class="portfolio-showcase">
-      <!-- Lead Featured Build -->
+        <div class="portfolio-showcase">
+      <!-- Lead Featured Build: Flagship EdTech Product -->
       <article class="portfolio-lead-card">
         <div>
-          <span class="badge">Featured Case Study · Compliance &amp; Gamification</span>
-          <h3>Gamified Industrial Safety Simulation</h3>
+          <span class="badge">Featured Flagship Build · Next.js 14 &amp; AI</span>
+          <h3>Adaptive Diagnostic Assessment Platform &amp; Teacher Analytics</h3>
           <div class="portfolio-psr-capsule">
             <div class="portfolio-psr-row p">
               <strong>Problem</strong>
-              <span>Compliance slide-clicking produced zero real-world hazard retention in operating plants.</span>
+              <span>Static MCQ tests produce binary pass/fail scores with zero insight into why learners struggle or what misconceptions led them astray.</span>
             </div>
             <div class="portfolio-psr-row s">
               <strong>Solution</strong>
-              <span>Custom 3D facility animation paired with branching decision logic in Storyline 360.</span>
+              <span>5-Level staircase adaptive testing engine with server-side grading, teacher diagnostic heatmap, and hallucination-free AI qualitative reports.</span>
             </div>
             <div class="portfolio-psr-row r">
               <strong>Results</strong>
-              <span>Active risk evaluation, immediate visual feedback, and verifiable SCORM 2004 tracking.</span>
+              <span>Deployed live on Vercel with zero-friction demo accounts, OpenDyslexic accessibility mode, and an automated LLM Judge quality pass.</span>
             </div>
           </div>
           <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 20px;">
-            <a class="btn" href="https://siva02m.github.io/EL3_001/" target="_blank" rel="noopener">
-              Launch Live Course
+            <a class="btn" href="https://owl-portfolio-three.vercel.app/login" target="_blank" rel="noopener">
+              Launch Live Platform
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a class="text-link" href="portfolio.html">Read full case study</a>
+            <a class="text-link" href="portfolio.html">Read full case study →</a>
+          </div>
+          <div style="font-size: 13px; color: var(--ink-soft); margin-top: 10px;">
+            Demo account: <code style="font-family: monospace; background: var(--accent-soft); color: var(--ink); padding: 2px 6px; border-radius: 4px; font-size: 12px;">asha@curiousowl.demo</code> / <code style="font-family: monospace; background: var(--accent-soft); color: var(--ink); padding: 2px 6px; border-radius: 4px; font-size: 12px;">owl-asha-1</code>
           </div>
         </div>
-        <div style="border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--paper);">
-          <img src="assets/portfolio/safety.png" alt="Gamified Industrial Safety Simulation" loading="lazy" style="width: 100%; display: block;">
+        <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16 / 10; background: var(--paper); box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+          <img src="assets/portfolio/owl-adaptive-platform.png" alt="Adaptive Diagnostic Assessment Platform and Teacher Analytics Dashboard" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;">
         </div>
       </article>
 
       <!-- 2-Card Grid for other key courses -->
       <div class="portfolio-grid">
+        <article class="portfolio-mini-card">
+          <div class="thumb">
+            <img src="assets/portfolio/safety.png" alt="Gamified Industrial Safety Simulation" loading="lazy">
+          </div>
+          <div class="label" style="margin-bottom: 6px;">Compliance · Gamification &amp; 3D</div>
+          <h3>Gamified Industrial Safety Simulation</h3>
+          <p>Replaced passive compliance slide-reading with immersive 3D facility hazard exploration and consequence-driven branching decision logic.</p>
+          <div class="portfolio-card-footer">
+            <a class="text-link" href="portfolio.html">View Case Study &amp; Demo →</a>
+            <span class="label" style="color: var(--ink-faint);">Storyline 360</span>
+          </div>
+        </article>
+
         <article class="portfolio-mini-card">
           <div class="thumb">
             <img src="assets/portfolio/captivate-architecture.png" alt="Adobe Captivate Course Architecture" loading="lazy">
@@ -861,24 +1067,11 @@
             <span class="label" style="color: var(--ink-faint);">2 Live Demos</span>
           </div>
         </article>
-
-        <article class="portfolio-mini-card">
-          <div class="thumb">
-            <img src="assets/portfolio/psych-safety.png" alt="Psychological Safety with Custom JS Player" loading="lazy">
-          </div>
-          <div class="label" style="margin-bottom: 6px;">Custom Code · JavaScript &amp; CSS</div>
-          <h3>Custom Player Skin &amp; Reflection Data Export</h3>
-          <p>Overrode default player styling via CSS and injected client-side JavaScript to capture learner reflections and export a downloadable personal action plan.</p>
-          <div class="portfolio-card-footer">
-            <a class="text-link" href="portfolio.html">View Case Study →</a>
-            <span class="label" style="color: var(--ink-faint);">Custom Dev</span>
-          </div>
-        </article>
       </div>
 
       <!-- Action Strip to Full Portfolio -->
       <div class="portfolio-cta-strip">
-        <p>Explore all 7 case studies with full Problem, Solution &amp; Results breakdowns.</p>
+        <p>Explore all 8 case studies with full Problem, Solution &amp; Results breakdowns.</p>
         <a class="btn" href="portfolio.html">
           View All Case Studies
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1023,7 +1216,7 @@
         <h2>Tell us what you're working on.</h2>
         <p class="sub">A couple of lines is enough. We reply within one working day with how we'd approach it.</p>
         <div class="addr">
-          <span id="email-addr">consulting@curiousowl.in</span>
+          <a href="mailto:consulting@curiousowl.in" target="_blank" rel="noopener" id="email-addr" style="color: inherit; text-decoration: underline; text-decoration-color: var(--band-accent); text-underline-offset: 4px;">consulting@curiousowl.in</a>
           <button type="button" id="copy-email">Copy address</button>
         </div>
       </div>
@@ -1047,7 +1240,7 @@
 
 <footer class="site wrap">
   <span>Curious Owl · Learning &amp; EdTech consulting</span>
-  <span>consulting@curiousowl.in</span>
+  <a href="mailto:consulting@curiousowl.in" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; text-underline-offset: 3px;">consulting@curiousowl.in</a>
 </footer>
 
 <script>
@@ -1075,9 +1268,70 @@
 
     document.getElementById('brief-form').addEventListener('submit', function (e) {
       e.preventDefault();
+      var name = document.getElementById('f-name').value.trim();
+      var email = document.getElementById('f-email').value.trim();
+      var msg = document.getElementById('f-msg').value.trim();
+
+      var subject = encodeURIComponent('Project Enquiry · ' + name);
+      var body = encodeURIComponent('From: ' + name + '\nWork Email: ' + email + '\n\nProject note:\n' + msg);
+      var mailtoUrl = 'mailto:consulting@curiousowl.in?subject=' + subject + '&body=' + body;
+
+      var tempLink = document.createElement('a');
+      tempLink.href = mailtoUrl;
+      tempLink.target = '_blank';
+      tempLink.rel = 'noopener';
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+
       document.getElementById('form-status').textContent =
-        'This form is not connected yet. Please email ' + addr + ' with your note.';
+        'Opening your email client to send your message to consulting@curiousowl.in. If it does not open automatically, write directly to consulting@curiousowl.in.';
     });
+
+    // Mobile Navigation Toggle
+    (function () {
+      var toggle = document.getElementById('nav-toggle');
+      var menu = document.getElementById('mobile-menu');
+      if (!toggle || !menu) return;
+
+      function openMenu() {
+        toggle.setAttribute('aria-expanded', 'true');
+        menu.removeAttribute('hidden');
+      }
+
+      function closeMenu() {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('hidden', '');
+      }
+
+      toggle.addEventListener('click', function () {
+        var isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        if (isExpanded) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      menu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          closeMenu();
+        });
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+          closeMenu();
+          toggle.focus();
+        }
+      });
+
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768 && toggle.getAttribute('aria-expanded') === 'true') {
+          closeMenu();
+        }
+      });
+    })();
   })();
 </script>
 </body>

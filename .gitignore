@@ -1,0 +1,19 @@
+# Curious Owl Site - Ignore Rules
+
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+slack_config.json
+telegram_config.json
+*_config.json
+!*.example.json
+*.secret
+credentials.json
+
+# Dependencies & Build artifacts
+node_modules/
+dist/
+build/
+.DS_Store
+Thumbs.db

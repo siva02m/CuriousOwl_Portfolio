@@ -112,7 +112,7 @@
     color: var(--label);
   }
 
-  /* Header */
+  /* Header & Navigation */
   body::before {
     content: "";
     position: fixed;
@@ -124,9 +124,10 @@
   header.site {
     position: sticky;
     top: env(safe-area-inset-top, 0px);
-    z-index: 10;
-    background: color-mix(in srgb, var(--paper) 92%, transparent);
-    backdrop-filter: blur(8px);
+    z-index: 100;
+    background: color-mix(in srgb, var(--paper) 95%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   .nav-row {
     display: flex;
@@ -147,10 +148,12 @@
     align-items: center;
     gap: 9px;
     text-decoration: none;
+    flex-shrink: 0;
   }
   .brand svg { width: 26px; height: 26px; flex-shrink: 0; color: var(--label); }
   nav.links {
     display: flex;
+    align-items: center;
     gap: 24px;
     font-family: var(--font-display);
     font-size: 14px;
@@ -175,7 +178,153 @@
     background: var(--accent);
     border-radius: 2px;
   }
-  @media (max-width: 640px) { nav.links .opt { display: none; } }
+
+  /* Mobile Hamburger Toggle */
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    margin-right: -6px;
+    cursor: pointer;
+    color: var(--ink);
+    border-radius: 6px;
+    position: relative;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .nav-toggle:focus-visible {
+    outline: 2px solid var(--label);
+    outline-offset: 2px;
+  }
+  .nav-toggle .bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), opacity 0.2s ease;
+    transform-origin: center;
+  }
+  .nav-toggle[aria-expanded="true"] .bar-top {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] .bar-mid {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .nav-toggle[aria-expanded="true"] .bar-bot {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Slide-down Mobile Menu Sheet */
+  .mobile-menu {
+    display: none;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 16px 32px -8px rgba(22, 15, 28, 0.12);
+    animation: menuSlide 0.25s cubic-bezier(0.2, 0, 0, 1) forwards;
+  }
+  @keyframes menuSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 0 6px;
+    gap: 2px;
+  }
+  .mobile-nav a {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 12px 14px;
+    border-radius: 8px;
+    transition: background 0.15s ease, color 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mobile-nav a:hover,
+  .mobile-nav a:active {
+    background: var(--accent-soft);
+    color: var(--label);
+  }
+  .mobile-nav a.active {
+    color: var(--ink);
+    background: var(--accent-soft);
+    font-weight: 700;
+  }
+  .mobile-nav a::after {
+    content: "→";
+    font-size: 14px;
+    color: var(--ink-faint);
+    transition: transform 0.15s ease;
+  }
+  .mobile-nav a:hover::after {
+    transform: translateX(3px);
+    color: var(--label);
+  }
+  .mobile-menu-cta {
+    padding: 10px 0 20px;
+    border-top: 1px solid var(--line);
+    margin-top: 6px;
+  }
+  .mobile-menu-cta .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 20px;
+    font-size: 15px;
+  }
+
+  /* Breakpoint <= 768px */
+  @media (max-width: 768px) {
+    .desktop-nav {
+      display: none !important;
+    }
+    .nav-toggle {
+      display: flex;
+    }
+    .mobile-menu:not([hidden]) {
+      display: block;
+    }
+    body {
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+    .nav-row {
+      padding-block: 14px;
+    }
+    .brand {
+      font-size: 18px;
+    }
+    .brand svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  @media (max-width: 380px) {
+    body {
+      padding-left: max(12px, env(safe-area-inset-left, 0px));
+      padding-right: max(12px, env(safe-area-inset-right, 0px));
+    }
+    .brand {
+      font-size: 16.5px;
+    }
+  }
 
   /* Page Intro */
   .page-intro {
@@ -185,12 +334,14 @@
   }
   .page-intro h1 {
     margin-top: 16px;
-    font-size: clamp(36px, 6vw, 68px);
+    font-size: clamp(30px, 6vw, 68px);
     font-weight: 800;
     font-stretch: 106%;
-    line-height: 1.02;
+    line-height: 1.04;
     letter-spacing: -0.025em;
     max-width: 18ch;
+    overflow-wrap: break-word;
+    word-break: normal;
   }
   .page-intro h1 em {
     font-style: normal;
@@ -200,6 +351,23 @@
     box-decoration-break: clone;
     padding-inline: 4px;
     margin-inline: -4px;
+  }
+  @media (max-width: 640px) {
+    .page-intro { padding-top: 36px; padding-bottom: 24px; }
+    .page-intro h1 {
+      font-size: clamp(26px, 8vw, 38px);
+      line-height: 1.08;
+      max-width: 100%;
+    }
+  }
+  @media (max-width: 400px) {
+    .page-intro h1 em {
+      padding-inline: 2px;
+      margin-inline: 0;
+    }
+    .page-intro h1 {
+      font-size: clamp(24px, 7.5vw, 30px);
+    }
   }
   .page-intro .intro-text {
     margin-top: 20px;
@@ -456,6 +624,21 @@
     border-color: var(--ink);
     background: var(--surface);
   }
+  .demo-cred-hint {
+    display: block;
+    width: 100%;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: -2px;
+  }
+  .demo-cred-hint code {
+    font-family: monospace;
+    background: var(--accent-soft);
+    color: var(--ink);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
 
   /* Right Column: Media Preview */
   .case-media {
@@ -643,7 +826,7 @@
 
 <header class="site">
   <div class="wrap nav-row">
-    <a class="brand" href="index.html">
+    <a class="brand" href="index.html#top">
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <circle cx="11" cy="14" r="6" fill="none" stroke="currentColor" stroke-width="2.4"/>
         <circle cx="21" cy="14" r="6" fill="none" stroke="currentColor" stroke-width="2.4"/>
@@ -653,13 +836,35 @@
       </svg>
       Curious Owl
     </a>
-    <nav class="links">
+    <nav class="links desktop-nav" aria-label="Primary navigation">
       <a href="index.html#services">What we do</a>
       <a class="active" href="portfolio.html">Portfolio</a>
-      <a class="opt" href="index.html#sectors">Who we work with</a>
-      <a class="opt" href="index.html#team">Team</a>
+      <a href="index.html#sectors">Who we work with</a>
+      <a href="index.html#team">Team</a>
       <a href="index.html#contact">Contact</a>
     </nav>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="bar bar-top"></span>
+      <span class="bar bar-mid"></span>
+      <span class="bar bar-bot"></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="wrap">
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="index.html#services">What we do</a>
+        <a class="active" href="portfolio.html">Portfolio</a>
+        <a href="index.html#sectors">Who we work with</a>
+        <a href="index.html#team">Team</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <div class="mobile-menu-cta">
+        <a class="btn" href="index.html#contact">
+          Start a Conversation
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -692,7 +897,8 @@
   <!-- Filter Buttons -->
   <section class="filters" aria-label="Filter case studies">
     <span class="filter-label">Filter by:</span>
-    <button type="button" class="filter-btn active" data-filter="all">All Case Studies (7)</button>
+    <button type="button" class="filter-btn active" data-filter="all">All Case Studies (8)</button>
+    <button type="button" class="filter-btn" data-filter="edtech-product">EdTech Products &amp; Web Apps</button>
     <button type="button" class="filter-btn" data-filter="gamification">Gamified &amp; Scenarios</button>
     <button type="button" class="filter-btn" data-filter="captivate">Adobe Captivate</button>
     <button type="button" class="filter-btn" data-filter="custom-dev">Custom CSS &amp; JS</button>
@@ -702,8 +908,81 @@
   <!-- Case Studies List -->
   <section class="case-studies" id="case-study-list">
 
-    <!-- Case Study 1: Safety Module (Featured) -->
-    <article class="case-card featured" data-category="gamification">
+    <!-- Case Study 1: Flagship Adaptive Assessment Platform (Featured) -->
+    <article class="case-card featured" data-category="edtech-product">
+      <div class="case-narrative">
+        <div class="badge-row">
+          <span class="badge">Full-Stack EdTech Product Build</span>
+          <span class="badge">Next.js 14 &amp; AI</span>
+          <span class="badge">Live Web Application</span>
+          <span class="badge demo-badge">1-Click Demo Available</span>
+        </div>
+        <h2>Adaptive Diagnostic Assessment Platform &amp; Teacher Analytics</h2>
+        <p class="case-subtitle">An intelligent 5-level staircase testing engine with real-time misconception tracking and automated qualitative reports</p>
+
+        <div class="psr-flow">
+          <div class="psr-block">
+            <div class="psr-tag problem">Problem</div>
+            <div class="psr-desc">
+              Standard multiple-choice tests are static, one-size-fits-all, and only capture binary pass/fail scores. Educators and L&D leaders have no visibility into why a learner struggled, which cognitive misconceptions led them astray, or who needs targeted intervention.
+            </div>
+          </div>
+          <div class="psr-block">
+            <div class="psr-tag solution">Solution</div>
+            <div class="psr-desc">
+              Engineered a full-stack, domain-agnostic assessment platform in <strong>Next.js 14, React 18, Tailwind CSS</strong>, and <strong>MongoDB Atlas</strong>. Features a <strong>5-Level Deterministic Staircase Adaptive Engine</strong> with real-time difficulty meters, server-side grading integrity, a Teacher Diagnostic Heatmap, and a "Code computes, LLM writes" dual-reporting engine guaranteeing zero math hallucinations while authoring qualitative feedback.
+            </div>
+          </div>
+          <div class="psr-block">
+            <div class="psr-tag results">Results</div>
+            <div class="psr-desc">
+              Deployed live on Vercel with zero-friction public demo accounts for prospective buyers, persistent OpenDyslexic accessibility mode, and an AI question-generation pipeline with an automated LLM Judge pass.
+            </div>
+          </div>
+        </div>
+
+        <div class="tech-tags">
+          <span>Next.js 14</span>
+          <span>React 18</span>
+          <span>Tailwind CSS</span>
+          <span>MongoDB Atlas</span>
+          <span>Adaptive Staircase Engine</span>
+          <span>Teacher Analytics Heatmap</span>
+          <span>OpenDyslexic Mode</span>
+          <span>Auth.js Demo Mode</span>
+        </div>
+
+        <div class="case-actions">
+          <a class="btn" href="https://owl-portfolio-three.vercel.app/login" target="_blank" rel="noopener">
+            Launch Live Platform
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <button type="button" class="btn btn-outline js-zoom" data-src="assets/portfolio/owl-adaptive-platform.png" data-caption="Adaptive Diagnostic Assessment Platform: 5-level adaptive staircase engine and teacher analytics heatmap">
+            Inspect Platform UI
+          </button>
+          <div class="demo-cred-hint">
+            Demo account: <code>asha@curiousowl.demo</code> / <code>owl-asha-1</code> (instant student or teacher access)
+          </div>
+        </div>
+      </div>
+
+      <div class="case-media">
+        <div class="media-frame js-zoom" data-src="assets/portfolio/owl-adaptive-platform.png" data-caption="Adaptive Diagnostic Assessment Platform: 5-level adaptive staircase engine and teacher analytics heatmap">
+          <img src="assets/portfolio/owl-adaptive-platform.png" alt="Adaptive Diagnostic Assessment Platform and Teacher Analytics Dashboard" loading="lazy" decoding="async">
+          <div class="media-overlay">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.5 1a5.5 5.5 0 0 1 4.38 8.82l3.65 3.65a.75.75 0 1 1-1.06 1.06l-3.65-3.65A5.5 5.5 0 1 1 6.5 1zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+            Click to expand
+          </div>
+        </div>
+        <div class="media-caption">
+          <span>Next.js 14 adaptive testing engine &amp; teacher heatmap</span>
+          <span>Live Vercel Production</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Case Study 2: Safety Module -->
+    <article class="case-card" data-category="gamification">
       <div class="case-narrative">
         <div class="badge-row">
           <span class="badge">Enterprise Compliance</span>
@@ -1174,7 +1453,7 @@
 
 <footer class="site wrap">
   <span>Curious Owl · Learning &amp; EdTech consulting</span>
-  <span>consulting@curiousowl.in</span>
+  <a href="mailto:consulting@curiousowl.in" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; text-underline-offset: 3px;">consulting@curiousowl.in</a>
 </footer>
 
 <script>
@@ -1241,6 +1520,51 @@
         closeLightbox();
       }
     });
+
+    // Mobile Navigation Toggle
+    (function () {
+      var toggle = document.getElementById('nav-toggle');
+      var menu = document.getElementById('mobile-menu');
+      if (!toggle || !menu) return;
+
+      function openMenu() {
+        toggle.setAttribute('aria-expanded', 'true');
+        menu.removeAttribute('hidden');
+      }
+
+      function closeMenu() {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('hidden', '');
+      }
+
+      toggle.addEventListener('click', function () {
+        var isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        if (isExpanded) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      menu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          closeMenu();
+        });
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+          closeMenu();
+          toggle.focus();
+        }
+      });
+
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768 && toggle.getAttribute('aria-expanded') === 'true') {
+          closeMenu();
+        }
+      });
+    })();
   })();
 </script>
 </body>
