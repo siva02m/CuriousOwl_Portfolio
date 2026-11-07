@@ -8,6 +8,34 @@
 <meta property="og:title" content="Curious Owl Consulting">
 <meta property="og:description" content="One team for everything learning. Design, engineering and measurement, from a single course to a full EdTech product.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://curiousowl.in/">
+<meta name="theme-color" content="#3B1F4E">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://curiousowl.in/">
+<meta property="og:site_name" content="Curious Owl Consulting">
+<meta property="og:image" content="https://curiousowl.in/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Curious Owl Consulting - one team for everything learning.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Curious Owl Consulting">
+<meta name="twitter:description" content="One team for everything learning. Design, engineering and measurement, from a single course to a full EdTech product.">
+<meta name="twitter:image" content="https://curiousowl.in/og.png">
+<link rel="apple-touch-icon" href="og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Curious Owl Consulting",
+  "url": "https://curiousowl.in/",
+  "email": "consulting@curiousowl.in",
+  "description": "Learning and EdTech consultancy: learning strategy, course engineering, CPE and compliance, EdTech product builds, AI in learning, AI agents and learning analytics.",
+  "areaServed": "IN",
+  "knowsAbout": ["Instructional design", "eLearning", "CPE compliance", "Articulate Storyline", "SCORM", "Learning analytics", "AI in learning"],
+  "contactPoint": {"@type": "ContactPoint", "email": "consulting@curiousowl.in", "contactType": "sales"}
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
 <style>
@@ -1222,6 +1250,7 @@
       </div>
 
       <form class="brief" id="brief-form">
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
         <label for="f-name">Your name
           <input type="text" id="f-name" required>
         </label>
@@ -1266,26 +1295,68 @@
       }
     });
 
+    // Contact form.
+    // ACCESS_KEY must be a Web3Forms access key (free, https://web3forms.com - enter
+    // consulting@curiousowl.in and the key arrives by email). While it is unset the form
+    // falls back to opening the visitor's mail client, so it never silently fails.
+    var ACCESS_KEY = 'c1f79575-4649-43dd-8a9b-0fe0699cc80a';
+    var EMAIL = 'consulting@curiousowl.in';
+
     document.getElementById('brief-form').addEventListener('submit', function (e) {
       e.preventDefault();
+      var form = this;
+      var statusEl = document.getElementById('form-status');
+      var btn = form.querySelector('button[type="submit"]');
       var name = document.getElementById('f-name').value.trim();
       var email = document.getElementById('f-email').value.trim();
       var msg = document.getElementById('f-msg').value.trim();
 
-      var subject = encodeURIComponent('Project Enquiry · ' + name);
-      var body = encodeURIComponent('From: ' + name + '\nWork Email: ' + email + '\n\nProject note:\n' + msg);
-      var mailtoUrl = 'mailto:consulting@curiousowl.in?subject=' + subject + '&body=' + body;
+      function mailtoFallback(note) {
+        var subject = encodeURIComponent('Project Enquiry \u00b7 ' + name);
+        var body = encodeURIComponent('From: ' + name + '\nWork Email: ' + email + '\n\nProject note:\n' + msg);
+        var link = document.createElement('a');
+        link.href = 'mailto:' + EMAIL + '?subject=' + subject + '&body=' + body;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        statusEl.textContent = note + ' You can also write directly to ' + EMAIL + '.';
+      }
 
-      var tempLink = document.createElement('a');
-      tempLink.href = mailtoUrl;
-      tempLink.target = '_blank';
-      tempLink.rel = 'noopener';
-      document.body.appendChild(tempLink);
-      tempLink.click();
-      document.body.removeChild(tempLink);
+      if (!ACCESS_KEY || ACCESS_KEY.indexOf('REPLACE_') === 0) {
+        mailtoFallback('Opening your email client so you can send this to ' + EMAIL + '.');
+        return;
+      }
 
-      document.getElementById('form-status').textContent =
-        'Opening your email client to send your message to consulting@curiousowl.in. If it does not open automatically, write directly to consulting@curiousowl.in.';
+      btn.disabled = true;
+      btn.textContent = 'Sending\u2026';
+      statusEl.textContent = 'Sending\u2026';
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: ACCESS_KEY,
+          subject: 'Project enquiry \u00b7 ' + name,
+          from_name: 'curiousowl.in',
+          name: name,
+          email: email,
+          message: msg,
+          botcheck: false
+        })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (r) {
+          if (r && r.success) {
+            form.reset();
+            statusEl.textContent = 'Thanks \u2014 your note is in. We reply within one working day.';
+          } else {
+            mailtoFallback('We could not send that just now.');
+          }
+        })
+        .catch(function () { mailtoFallback('We could not send that just now.'); })
+        .then(function () { btn.disabled = false; btn.textContent = 'Send'; });
     });
 
     // Mobile Navigation Toggle

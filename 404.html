@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page not found · Curious Owl Consulting</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600&display=swap">
+<style>
+  :root {
+    --paper: #F6F5F2; --ink: #3B1F4E; --ink-soft: #5E5068; --accent: #2BD46A; --label: #6B4485; --line: #E2DDE5;
+    --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+    --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #160F1C; --ink: #F1ECF4; --ink-soft: #BFB3C8; --accent: #2BD46A; --label: #2BD46A; --line: #33283C; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100dvh; display: grid; place-items: center;
+    background: var(--paper); color: var(--ink);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+    padding: 24px max(20px, env(safe-area-inset-left, 0px));
+  }
+  .card { max-width: 640px; }
+  .bar { width: 64px; height: 8px; background: var(--accent); margin-bottom: 28px; }
+  .label {
+    font-family: var(--font-display); font-weight: 700; font-size: 12.5px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--label); margin-bottom: 14px;
+  }
+  h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(32px, 7vw, 52px); line-height: 1.05; margin: 0 0 18px; text-wrap: balance; }
+  p { margin: 0 0 16px; color: var(--ink-soft); }
+  .links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 30px; }
+  a { color: inherit; }
+  .links a {
+    font-family: var(--font-display); font-weight: 600; font-size: 15px;
+    text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 2px;
+  }
+  .links a:focus-visible { outline: 2px solid var(--label); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="bar" aria-hidden="true"></div>
+  <div class="label">404 · Page not found</div>
+  <h1>This page doesn't exist.</h1>
+  <p>The link may be old, or the address may have a typo in it. Nothing here has moved permanently — the page you want is probably one of these.</p>
+  <div class="links">
+    <a href="/">Home</a>
+    <a href="/#services">What we do</a>
+    <a href="/portfolio.html">Portfolio</a>
+    <a href="/#contact">Get in touch</a>
+  </div>
+</main>
+</body>
+</html>
