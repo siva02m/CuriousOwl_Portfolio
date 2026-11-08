@@ -829,12 +829,132 @@
     color: var(--ink-faint);
   }
 </style>
+
+<style>
+  /* ---- Services pages, nav dropdown and footer columns ---- */
+  .nav-drop { position: relative; }
+  .nav-drop > summary {
+    list-style: none; cursor: pointer; white-space: nowrap;
+    font-family: var(--font-display); font-size: 14px; font-weight: 500;
+    color: var(--ink-soft); display: inline-flex; align-items: center; gap: 5px;
+    transition: color 0.15s ease;
+  }
+  .nav-drop > summary::-webkit-details-marker { display: none; }
+  .nav-drop > summary::after {
+    content: ""; width: 6px; height: 6px; margin-top: -2px;
+    border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor;
+    transform: rotate(45deg); transition: transform 0.15s ease;
+  }
+  .nav-drop[open] > summary, .nav-drop > summary:hover { color: var(--label); }
+  .nav-drop[open] > summary::after { transform: rotate(-135deg); margin-top: 2px; }
+  .nav-drop-menu {
+    position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%);
+    display: grid; gap: 2px; min-width: 290px; padding: 10px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 18px 40px -24px rgba(43, 32, 51, 0.45); z-index: 200;
+  }
+  .nav-drop-menu a {
+    display: block; padding: 9px 12px; border-radius: 9px; text-decoration: none;
+    font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .nav-drop-menu a:hover { background: var(--accent-soft); color: var(--label); }
+  .nav-drop-menu .nav-drop-all {
+    border-bottom: 1px solid var(--line); border-radius: 0; padding-bottom: 11px; margin-bottom: 4px;
+    color: var(--label); font-weight: 700;
+  }
+
+  .breadcrumb {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.02em;
+    color: var(--ink-faint); padding-block: 28px 0;
+  }
+  .breadcrumb a { text-decoration: none; color: var(--ink-soft); }
+  .breadcrumb a:hover { color: var(--label); text-decoration: underline; text-underline-offset: 3px; }
+
+  .svc-hero { padding-block: 28px 40px; border-bottom: 1px solid var(--line); }
+  .svc-hero h1 {
+    margin-top: 16px; font-size: clamp(29px, 5.6vw, 54px); font-weight: 800;
+    font-stretch: 105%; line-height: 1.03; letter-spacing: -0.025em; max-width: 20ch;
+    overflow-wrap: break-word;
+  }
+  .svc-quote { margin: 26px 0 0; padding-left: 16px; border-left: 3px solid var(--accent); max-width: 46ch; }
+  .svc-quote p { font-size: 16.5px; color: var(--label); }
+  .svc-lead { margin-top: 22px; font-size: clamp(16.5px, 2.1vw, 19.5px); line-height: 1.55; color: var(--ink-soft); max-width: 62ch; }
+
+  .svc-body { padding-block: 12px 0; max-width: 68ch; }
+  .svc-body h2 {
+    margin-top: 36px; font-size: clamp(19px, 2.4vw, 23px); font-weight: 700;
+    letter-spacing: -0.01em; color: var(--ink);
+  }
+  .svc-body p { margin-top: 12px; color: var(--ink-soft); line-height: 1.62; }
+  .svc-body ul { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 9px; }
+  .svc-body li { color: var(--ink-soft); line-height: 1.55; }
+  .svc-body li::marker { color: var(--accent); }
+  .svc-body strong { color: var(--ink); }
+
+  .svc-receive, .svc-related { margin-top: 44px; padding-top: 26px; border-top: 1px solid var(--line); }
+  .svc-receive h2, .svc-related h2 { font-size: 13px; font-family: var(--font-display); font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--label); }
+  .svc-receive ul { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .svc-receive li { position: relative; padding-left: 20px; color: var(--ink-soft); }
+  .svc-receive li::before {
+    content: ""; position: absolute; left: 0; top: 0.5em; width: 9px; height: 9px;
+    border-radius: 50%; background: var(--accent);
+  }
+  .related-links { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .related-links a {
+    display: inline-block; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px;
+    font-family: var(--font-display); font-size: 13.5px; font-weight: 500; color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .related-links a:hover { border-color: var(--label); color: var(--label); }
+
+  .svc-cta { margin: 52px 0 72px; }
+
+  .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; margin-top: 30px; }
+  .svc-card {
+    display: flex; flex-direction: column; gap: 8px; padding: 22px;
+    border: 1px solid var(--line); border-radius: 14px; background: var(--surface); text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .svc-card:hover { border-color: var(--label); transform: translateY(-2px); }
+  .svc-card h2 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0; }
+  .svc-card p { font-size: 14.5px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+  .svc-card .card-more { margin-top: auto; padding-top: 10px; font-family: var(--font-display); font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--label); }
+
+  .footer-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.8fr); gap: 32px; padding-block: 20px 26px; }
+  .footer-brand { display: grid; gap: 6px; align-content: start; }
+  .footer-name { font-family: var(--font-display); font-weight: 800; font-size: 16px; }
+  .footer-line { font-size: 14.5px; color: var(--ink-faint); }
+  .footer-brand a { font-size: 14.5px; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  .footer-col { display: grid; gap: 8px; align-content: start; }
+  .footer-head { font-family: var(--font-display); font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--label); margin-bottom: 2px; }
+  .footer-col a { font-size: 14px; color: var(--ink-soft); text-decoration: none; }
+  .footer-col a:hover { color: var(--label); text-decoration: underline; text-underline-offset: 3px; }
+  .footer-legal { border-top: 1px solid var(--line); padding-block: 16px 8px; font-size: 13px; color: var(--ink-faint); }
+
+  @media (max-width: 860px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 26px; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 560px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 22px; }
+    .svc-hero { padding-block: 20px 32px; }
+    .svc-hero h1 { font-size: clamp(26px, 8.2vw, 36px); max-width: none; }
+    .svc-quote p { font-size: 15.5px; }
+    .svc-body h2 { margin-top: 30px; }
+    .svc-body ul { padding-left: 18px; }
+    .svc-cta .band { padding: 26px 20px; }
+    .related-links a { font-size: 13px; padding: 8px 12px; }
+  }
+</style>
 </head>
 <body>
 
 <header class="site">
   <div class="wrap nav-row">
-    <a class="brand" href="index.html#top">
+    <a class="brand" href="/">
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <circle cx="11" cy="14" r="6" fill="none" stroke="currentColor" stroke-width="2.4"/>
         <circle cx="21" cy="14" r="6" fill="none" stroke="currentColor" stroke-width="2.4"/>
@@ -845,11 +965,24 @@
       Curious Owl
     </a>
     <nav class="links desktop-nav" aria-label="Primary navigation">
-      <a href="index.html#services">What we do</a>
-      <a class="active" href="portfolio.html">Portfolio</a>
-      <a href="index.html#sectors">Who we work with</a>
-      <a href="index.html#team">Team</a>
-      <a href="index.html#contact">Contact</a>
+      <details class="nav-drop">
+        <summary>What we do</summary>
+        <div class="nav-drop-menu">
+          <a class="nav-drop-all" href="/services/">All services</a>
+          <a href="/services/cpe-compliance-courses">CPE &amp; compliance</a>
+          <a href="/services/course-engineering">Course engineering</a>
+          <a href="/services/learning-strategy">Learning strategy</a>
+          <a href="/services/edtech-product-build">EdTech product build</a>
+          <a href="/services/ai-in-learning">AI in learning</a>
+          <a href="/services/ai-agents-for-learning">AI agents in learning</a>
+          <a href="/services/learning-analytics">Learning analytics</a>
+          <a href="/services/item-analysis">Item analysis</a>
+        </div>
+      </details>
+      <a href="/portfolio.html">Portfolio</a>
+      <a href="/#sectors">Who we work with</a>
+      <a href="/#team">Team</a>
+      <a href="/#contact">Contact</a>
     </nav>
     <div class="nav-actions">
       <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false">
@@ -866,14 +999,22 @@
   <div class="mobile-menu" id="mobile-menu" hidden>
     <div class="wrap">
       <nav class="mobile-nav" aria-label="Mobile navigation">
-        <a href="index.html#services">What we do</a>
-        <a class="active" href="portfolio.html">Portfolio</a>
-        <a href="index.html#sectors">Who we work with</a>
-        <a href="index.html#team">Team</a>
-        <a href="index.html#contact">Contact</a>
+        <a href="/services/">All services</a>
+        <a href="/services/cpe-compliance-courses">CPE &amp; compliance</a>
+        <a href="/services/course-engineering">Course engineering</a>
+        <a href="/services/learning-strategy">Learning strategy</a>
+        <a href="/services/edtech-product-build">EdTech product build</a>
+        <a href="/services/ai-in-learning">AI in learning</a>
+        <a href="/services/ai-agents-for-learning">AI agents in learning</a>
+        <a href="/services/learning-analytics">Learning analytics</a>
+        <a href="/services/item-analysis">Item analysis</a>
+        <a href="/portfolio.html">Portfolio</a>
+        <a href="/#sectors">Who we work with</a>
+        <a href="/#team">Team</a>
+        <a href="/#contact">Contact</a>
       </nav>
       <div class="mobile-menu-cta">
-        <a class="btn" href="index.html#contact">
+        <a class="btn" href="/#contact">
           Start a Conversation
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -1466,8 +1607,32 @@
 </div>
 
 <footer class="site wrap">
-  <span>Curious Owl · Learning &amp; EdTech consulting</span>
-  <a href="mailto:consulting@curiousowl.in" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; text-underline-offset: 3px;">consulting@curiousowl.in</a>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-name">Curious Owl</span>
+      <span class="footer-line">Learning &amp; EdTech consulting</span>
+      <a href="mailto:consulting@curiousowl.in" target="_blank" rel="noopener">consulting@curiousowl.in</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-head">Services</span>
+        <a href="/services/cpe-compliance-courses">CPE &amp; compliance</a>
+        <a href="/services/course-engineering">Course engineering</a>
+        <a href="/services/learning-strategy">Learning strategy</a>
+        <a href="/services/edtech-product-build">EdTech product build</a>
+        <a href="/services/ai-in-learning">AI in learning</a>
+        <a href="/services/ai-agents-for-learning">AI agents in learning</a>
+        <a href="/services/learning-analytics">Learning analytics</a>
+        <a href="/services/item-analysis">Item analysis</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-head">Company</span>
+      <a href="/portfolio.html">Portfolio</a>
+      <a href="/#sectors">Who we work with</a>
+      <a href="/#team">Team</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-legal">Curious Owl · Learning &amp; EdTech consulting · India</div>
 </footer>
 
 <script>
