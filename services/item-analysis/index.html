@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Learning Analytics: xAPI &amp; Impact Measurement | Curious Owl</title>
-<meta name="description" content="Measurement designed into the project from day one: LMS and xAPI tracking, dashboards, assessment analysis and evidence that goes beyond completion rates.">
-<meta property="og:title" content="Learning Analytics: xAPI &amp; Impact Measurement | Curious Owl">
-<meta property="og:description" content="Measurement designed into the project from day one: LMS and xAPI tracking, dashboards, assessment analysis and evidence that goes beyond completion rates.">
+<title>Exam Item Analysis &amp; Psychometrics | Curious Owl</title>
+<meta name="description" content="Item statistics for question banks: difficulty, discrimination, reliability, blueprint coverage and a pass mark you can defend in an audit.">
+<meta property="og:title" content="Exam Item Analysis &amp; Psychometrics | Curious Owl">
+<meta property="og:description" content="Item statistics for question banks: difficulty, discrimination, reliability, blueprint coverage and a pass mark you can defend in an audit.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://curiousowl.in/services/learning-analytics">
+<link rel="canonical" href="https://curiousowl.in/services/item-analysis/">
 <meta name="theme-color" content="#3B1F4E">
 <script>try{if(localStorage.getItem('co-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}</script>
 
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://curiousowl.in/services/learning-analytics">
+<meta property="og:url" content="https://curiousowl.in/services/item-analysis/">
 <meta property="og:site_name" content="Curious Owl Consulting">
 <meta property="og:image" content="https://curiousowl.in/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Curious Owl Consulting - one team for everything learning.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Learning Analytics: xAPI &amp; Impact Measurement | Curious Owl">
-<meta name="twitter:description" content="Measurement designed into the project from day one: LMS and xAPI tracking, dashboards, assessment analysis and evidence that goes beyond completion rates.">
+<meta name="twitter:title" content="Exam Item Analysis &amp; Psychometrics | Curious Owl">
+<meta name="twitter:description" content="Item statistics for question banks: difficulty, discrimination, reliability, blueprint coverage and a pass mark you can defend in an audit.">
 <meta name="twitter:image" content="https://curiousowl.in/og.png">
 <link rel="apple-touch-icon" href="/og.png">
 <script type="application/ld+json">
@@ -959,126 +959,6 @@
     .related-links a { font-size: 13px; padding: 8px 12px; }
   }
 </style>
-
-<style>
-  /* ---- Services pages, nav dropdown and footer columns ---- */
-  .nav-drop { position: relative; }
-  .nav-drop > summary {
-    list-style: none; cursor: pointer; white-space: nowrap;
-    font-family: var(--font-display); font-size: 14px; font-weight: 500;
-    color: var(--ink-soft); display: inline-flex; align-items: center; gap: 5px;
-    transition: color 0.15s ease;
-  }
-  .nav-drop > summary::-webkit-details-marker { display: none; }
-  .nav-drop > summary::after {
-    content: ""; width: 6px; height: 6px; margin-top: -2px;
-    border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor;
-    transform: rotate(45deg); transition: transform 0.15s ease;
-  }
-  .nav-drop[open] > summary, .nav-drop > summary:hover { color: var(--label); }
-  .nav-drop[open] > summary::after { transform: rotate(-135deg); margin-top: 2px; }
-  .nav-drop-menu {
-    position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%);
-    display: grid; gap: 2px; min-width: 290px; padding: 10px;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
-    box-shadow: 0 18px 40px -24px rgba(43, 32, 51, 0.45); z-index: 200;
-  }
-  .nav-drop-menu a {
-    display: block; padding: 9px 12px; border-radius: 9px; text-decoration: none;
-    font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--ink-soft);
-    white-space: nowrap;
-  }
-  .nav-drop-menu a:hover { background: var(--accent-soft); color: var(--label); }
-  .nav-drop-menu .nav-drop-all {
-    border-bottom: 1px solid var(--line); border-radius: 0; padding-bottom: 11px; margin-bottom: 4px;
-    color: var(--label); font-weight: 700;
-  }
-
-  .breadcrumb {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
-    font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.02em;
-    color: var(--ink-faint); padding-block: 28px 0;
-  }
-  .breadcrumb a { text-decoration: none; color: var(--ink-soft); }
-  .breadcrumb a:hover { color: var(--label); text-decoration: underline; text-underline-offset: 3px; }
-
-  .svc-hero { padding-block: 28px 40px; border-bottom: 1px solid var(--line); }
-  .svc-hero h1 {
-    margin-top: 16px; font-size: clamp(29px, 5.6vw, 54px); font-weight: 800;
-    font-stretch: 105%; line-height: 1.03; letter-spacing: -0.025em; max-width: 20ch;
-    overflow-wrap: break-word;
-  }
-  .svc-quote { margin: 26px 0 0; padding-left: 16px; border-left: 3px solid var(--accent); max-width: 46ch; }
-  .svc-quote p { font-size: 16.5px; color: var(--label); }
-  .svc-lead { margin-top: 22px; font-size: clamp(16.5px, 2.1vw, 19.5px); line-height: 1.55; color: var(--ink-soft); max-width: 62ch; }
-
-  .svc-body { padding-block: 12px 0; max-width: 68ch; }
-  .svc-body h2 {
-    margin-top: 36px; font-size: clamp(19px, 2.4vw, 23px); font-weight: 700;
-    letter-spacing: -0.01em; color: var(--ink);
-  }
-  .svc-body p { margin-top: 12px; color: var(--ink-soft); line-height: 1.62; }
-  .svc-body ul { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 9px; }
-  .svc-body li { color: var(--ink-soft); line-height: 1.55; }
-  .svc-body li::marker { color: var(--accent); }
-  .svc-body strong { color: var(--ink); }
-
-  .svc-receive, .svc-related { margin-top: 44px; padding-top: 26px; border-top: 1px solid var(--line); }
-  .svc-receive h2, .svc-related h2 { font-size: 13px; font-family: var(--font-display); font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--label); }
-  .svc-receive ul { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-  .svc-receive li { position: relative; padding-left: 20px; color: var(--ink-soft); }
-  .svc-receive li::before {
-    content: ""; position: absolute; left: 0; top: 0.5em; width: 9px; height: 9px;
-    border-radius: 50%; background: var(--accent);
-  }
-  .related-links { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
-  .related-links a {
-    display: inline-block; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px;
-    font-family: var(--font-display); font-size: 13.5px; font-weight: 500; color: var(--ink-soft);
-    text-decoration: none;
-  }
-  .related-links a:hover { border-color: var(--label); color: var(--label); }
-
-  .svc-cta { margin: 52px 0 72px; }
-
-  .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; margin-top: 30px; }
-  .svc-card {
-    display: flex; flex-direction: column; gap: 8px; padding: 22px;
-    border: 1px solid var(--line); border-radius: 14px; background: var(--surface); text-decoration: none;
-    transition: border-color 0.15s ease, transform 0.15s ease;
-  }
-  .svc-card:hover { border-color: var(--label); transform: translateY(-2px); }
-  .svc-card h2 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0; }
-  .svc-card p { font-size: 14.5px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
-  .svc-card .card-more { margin-top: auto; padding-top: 10px; font-family: var(--font-display); font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--label); }
-
-  .footer-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.8fr); gap: 32px; padding-block: 20px 26px; }
-  .footer-brand { display: grid; gap: 6px; align-content: start; }
-  .footer-name { font-family: var(--font-display); font-weight: 800; font-size: 16px; }
-  .footer-line { font-size: 14.5px; color: var(--ink-faint); }
-  .footer-brand a { font-size: 14.5px; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
-  .footer-col { display: grid; gap: 8px; align-content: start; }
-  .footer-head { font-family: var(--font-display); font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--label); margin-bottom: 2px; }
-  .footer-col a { font-size: 14px; color: var(--ink-soft); text-decoration: none; }
-  .footer-col a:hover { color: var(--label); text-decoration: underline; text-underline-offset: 3px; }
-  .footer-legal { border-top: 1px solid var(--line); padding-block: 16px 8px; font-size: 13px; color: var(--ink-faint); }
-
-  @media (max-width: 860px) {
-    .footer-grid { grid-template-columns: 1fr 1fr; gap: 26px; }
-    .footer-brand { grid-column: 1 / -1; }
-  }
-  @media (max-width: 560px) {
-    .footer-grid { grid-template-columns: 1fr; gap: 22px; }
-    .svc-hero { padding-block: 20px 32px; }
-    .svc-hero h1 { font-size: clamp(26px, 8.2vw, 36px); max-width: none; }
-    .svc-quote p { font-size: 15.5px; }
-    .svc-body h2 { margin-top: 30px; }
-    .svc-body ul { padding-left: 18px; }
-    .svc-cta .band { padding: 26px 20px; }
-    .related-links a { font-size: 13px; padding: 8px 12px; }
-  }
-</style>
 </head>
 <body>
 <header class="site">
@@ -1098,14 +978,14 @@
         <summary>What we do</summary>
         <div class="nav-drop-menu">
           <a class="nav-drop-all" href="/services/">All services</a>
-          <a href="/services/cpe-compliance-courses">CPE &amp; compliance</a>
-          <a href="/services/course-engineering">Course engineering</a>
-          <a href="/services/learning-strategy">Learning strategy</a>
-          <a href="/services/edtech-product-build">EdTech product build</a>
-          <a href="/services/ai-in-learning">AI in learning</a>
-          <a href="/services/ai-agents-for-learning">AI agents in learning</a>
-          <a href="/services/learning-analytics">Learning analytics</a>
-          <a href="/services/item-analysis">Item analysis</a>
+          <a href="/services/cpe-compliance-courses/">CPE &amp; compliance</a>
+          <a href="/services/course-engineering/">Course engineering</a>
+          <a href="/services/learning-strategy/">Learning strategy</a>
+          <a href="/services/edtech-product-build/">EdTech product build</a>
+          <a href="/services/ai-in-learning/">AI in learning</a>
+          <a href="/services/ai-agents-for-learning/">AI agents in learning</a>
+          <a href="/services/learning-analytics/">Learning analytics</a>
+          <a href="/services/item-analysis/">Item analysis</a>
         </div>
       </details>
       <a href="/portfolio.html">Portfolio</a>
@@ -1129,14 +1009,14 @@
     <div class="wrap">
       <nav class="mobile-nav" aria-label="Mobile navigation">
         <a href="/services/">All services</a>
-        <a href="/services/cpe-compliance-courses">CPE &amp; compliance</a>
-        <a href="/services/course-engineering">Course engineering</a>
-        <a href="/services/learning-strategy">Learning strategy</a>
-        <a href="/services/edtech-product-build">EdTech product build</a>
-        <a href="/services/ai-in-learning">AI in learning</a>
-        <a href="/services/ai-agents-for-learning">AI agents in learning</a>
-        <a href="/services/learning-analytics">Learning analytics</a>
-        <a href="/services/item-analysis">Item analysis</a>
+        <a href="/services/cpe-compliance-courses/">CPE &amp; compliance</a>
+        <a href="/services/course-engineering/">Course engineering</a>
+        <a href="/services/learning-strategy/">Learning strategy</a>
+        <a href="/services/edtech-product-build/">EdTech product build</a>
+        <a href="/services/ai-in-learning/">AI in learning</a>
+        <a href="/services/ai-agents-for-learning/">AI agents in learning</a>
+        <a href="/services/learning-analytics/">Learning analytics</a>
+        <a href="/services/item-analysis/">Item analysis</a>
         <a href="/portfolio.html">Portfolio</a>
         <a href="/#sectors">Who we work with</a>
         <a href="/#team">Team</a>
@@ -1156,52 +1036,59 @@
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/">Home</a><span aria-hidden="true">/</span>
     <a href="/services/">Services</a><span aria-hidden="true">/</span>
-    <span aria-current="page">Learning analytics</span>
+    <span aria-current="page">Item analysis &amp; exam quality</span>
   </nav>
 
   <section class="svc-hero">
     <div class="label">Service</div>
-    <h1>Evidence that goes beyond completion rates</h1>
-    <blockquote class="svc-quote"><p>“Is any of this working?”</p></blockquote>
-    <p class="svc-lead">Completion tells you someone clicked. It does not tell you whether a nurse can spot a deteriorating patient, whether a new hire can handle the third escalation, or whether the training changed anything at all. Measurement has to be designed before the build, because retrofitting it costs three times as much and usually gets skipped.</p>
+    <h1>Know which of your exam items are doing nothing</h1>
+    <blockquote class="svc-quote"><p>“Half our exam items are doing nothing.”</p></blockquote>
+    <p class="svc-lead">Every question bank accumulates items nobody has looked at since they were written: questions everyone gets right, questions that separate nobody, distractors no candidate ever chooses. They inflate the score, hide the real spread, and make the pass mark impossible to defend. Item analysis is how you find them.</p>
   </section>
 
   <section class="svc-body">
-    <h2>Why completion is a vanity metric</h2>
-    <p>It measures exposure, not capability, and it is the number that is easiest to move without changing anything that matters. If completion is the only metric in the review, the review will pass and nothing will improve.</p>
-    <h2>What we instrument</h2>
+    <h2>What item analysis measures</h2>
     <ul>
-      <li><strong>Assessment results at item level</strong> — not just the score, but which items and which misconceptions.</li>
-      <li><strong>xAPI statements</strong> for activity outside the LMS — practice, observation, on-the-job behaviour.</li>
-      <li><strong>Time and path</strong> — where people stop, loop, or skip.</li>
-      <li><strong>LMS data you already have</strong>, before anyone buys another platform.</li>
+      <li><strong>Difficulty (p-value)</strong> — the proportion answering correctly, per item and per form.</li>
+      <li><strong>Discrimination</strong> — point-biserial correlation and the upper/lower 27% comparison: does the item separate people who know from people who do not?</li>
+      <li><strong>Distractor analysis</strong> — which wrong options nobody chooses, and which ones attract the strongest candidates.</li>
+      <li><strong>Item–total correlation</strong> — whether the item agrees with the test as a whole.</li>
+      <li><strong>Reliability</strong> — KR-20 or Cronbach's alpha, with the standard error of measurement, so a score reads as a range rather than a verdict.</li>
+      <li><strong>Blueprint coverage</strong> — whether the form samples the specification it claims to test, by topic and cognitive demand.</li>
     </ul>
-    <h2>Three questions a dashboard should answer</h2>
+    <h2>Flag, retire, rewrite — the rules</h2>
+    <p>We state the decision rules as thresholds, so the report can be audited rather than trusted:</p>
     <ul>
-      <li><strong>Who is behind</strong>, and on which objective specifically.</li>
-      <li><strong>Where they stop</strong>, and whether that is a content problem or a scheduling one.</li>
-      <li><strong>What they can now do</strong> that they could not before — with the evidence behind the claim.</li>
+      <li><strong>Difficulty</strong> outside 0.20–0.95 — flag as too hard or too easy for the population it serves.</li>
+      <li><strong>Discrimination</strong> below 0.20 — flag; below 0.10, retire unless the blueprint requires it.</li>
+      <li><strong>Non-functioning distractor</strong> chosen by under 5% of candidates — rewrite the option, not the item.</li>
+      <li><strong>Reliability</strong> below 0.70 for a high-stakes form — the form needs work before the items do.</li>
     </ul>
-    <h2>Start with what you already have</h2>
-    <p>Most organisations are sitting on two years of LMS and assessment data nobody has analysed. We start there, because a measurement plan built on data you already own is cheaper and faster than a new platform — and it usually reveals that the problem is one objective, not the whole programme.</p>
+    <h2>Blueprint and cut score</h2>
+    <p>A defensible pass mark comes from a documented method, not from a round number. We run a modified Angoff with your subject experts, record the judgements, and write the rationale — which is the artefact a reviewer asks for when a candidate challenges a result.</p>
+    <h2>Bank health over time</h2>
+    <p>One sitting of analysis fixes one form. A bank needs rotation, exposure control and equating across sittings, or repeat candidates gain an advantage and scores stop being comparable. That is a quarterly job, not a one-off.</p>
+    <h2>Who asks for this</h2>
+    <p>CPE and certification bodies facing an audit, universities in NAAC or NBA review where assessment quality is examined directly, EdTech products with a large question bank, and compliance teams whose tests carry legal weight.</p>
   </section>
 
   <section class="svc-receive">
     <h2>What you receive</h2>
     <ul>
-      <li>Measurement plan written before the build starts</li>
-      <li>xAPI or LMS instrumentation</li>
-      <li>Dashboard plus a monthly readout, not just access</li>
-      <li>Impact report at close of programme</li>
+      <li>One-page exam health summary</li>
+      <li>Item-level workbook with statistics, flags and recommended actions</li>
+      <li>Rewritten items for the flagged set, originals retained</li>
+      <li>Audit pack: blueprint, method statement, cut-score rationale, reliability evidence</li>
+      <li>Readout call, because the numbers need interpretation to be useful</li>
     </ul>
   </section>
 
   <section class="svc-related">
     <h2>Related services</h2>
     <div class="related-links">
-      <a href="/services/item-analysis">Item analysis &amp; exam quality</a>
-      <a href="/services/cpe-compliance-courses">CPE & compliance courses</a>
-      <a href="/services/edtech-product-build">EdTech product build</a>
+      <a href="/services/cpe-compliance-courses/">CPE & compliance courses</a>
+      <a href="/services/learning-analytics/">Learning analytics</a>
+      <a href="/services/edtech-product-build/">EdTech product build</a>
     </div>
   </section>
 
@@ -1230,14 +1117,14 @@
     </div>
     <div class="footer-col">
       <span class="footer-head">Services</span>
-        <a href="/services/cpe-compliance-courses">CPE &amp; compliance</a>
-        <a href="/services/course-engineering">Course engineering</a>
-        <a href="/services/learning-strategy">Learning strategy</a>
-        <a href="/services/edtech-product-build">EdTech product build</a>
-        <a href="/services/ai-in-learning">AI in learning</a>
-        <a href="/services/ai-agents-for-learning">AI agents in learning</a>
-        <a href="/services/learning-analytics">Learning analytics</a>
-        <a href="/services/item-analysis">Item analysis</a>
+        <a href="/services/cpe-compliance-courses/">CPE &amp; compliance</a>
+        <a href="/services/course-engineering/">Course engineering</a>
+        <a href="/services/learning-strategy/">Learning strategy</a>
+        <a href="/services/edtech-product-build/">EdTech product build</a>
+        <a href="/services/ai-in-learning/">AI in learning</a>
+        <a href="/services/ai-agents-for-learning/">AI agents in learning</a>
+        <a href="/services/learning-analytics/">Learning analytics</a>
+        <a href="/services/item-analysis/">Item analysis</a>
     </div>
     <div class="footer-col">
       <span class="footer-head">Company</span>
