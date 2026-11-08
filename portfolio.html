@@ -9,6 +9,8 @@
 <meta property="og:description" content="Explore interactive course builds structured by Problem, Solution, and Results. From 3D gamified compliance to custom JavaScript players.">
 <link rel="canonical" href="https://curiousowl.in/portfolio.html">
 <meta name="theme-color" content="#3B1F4E">
+<script>try{if(localStorage.getItem('co-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}</script>
+
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://curiousowl.in/portfolio.html">
 <meta property="og:site_name" content="Curious Owl Consulting">
@@ -52,30 +54,7 @@
     --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
     --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #160F1C;
-      --surface: #1F1627;
-      --ink: #F1ECF4;
-      --ink-soft: #BFB3C8;
-      --ink-faint: #857A8E;
-      --accent: #2BD46A;
-      --accent-soft: #2A1F33;
-      --accent-dark: #2BD46A;
-      --label: #2BD46A;
-      --hl-bg: transparent;
-      --hl-fg: #2BD46A;
-      --btn-bg: #2BD46A;
-      --btn-fg: #160F1C;
-      --line: #33283C;
-      --broken: #4A3D55;
-      --band-bg: #2A1838;
-      --band-fg: #F1ECF4;
-      --band-soft: #BFB3C8;
-      --band-accent: #2BD46A;
-      color-scheme: dark;
-    }
-  }
+  /* Light is the default. Dark applies only via [data-theme="dark"], set by the toggle. */
   :root[data-theme="dark"] {
     --paper: #160F1C;
     --surface: #1F1627;
@@ -191,6 +170,22 @@
     background: var(--accent);
     border-radius: 2px;
   }
+
+  /* Theme toggle: light is the default; the choice persists in localStorage. */
+  .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; padding: 0; flex-shrink: 0;
+    background: transparent; color: var(--ink-soft);
+    border: 1px solid var(--line); border-radius: 999px; cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .theme-toggle:hover { color: var(--label); border-color: var(--label); }
+  .theme-toggle svg { width: 18px; height: 18px; }
+  .theme-toggle .ico-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .ico-sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .ico-moon { display: none; }
+  .theme-toggle:focus-visible { outline: 2px solid var(--label); outline-offset: 3px; }
 
   /* Mobile Hamburger Toggle */
   .nav-toggle {
@@ -856,11 +851,17 @@
       <a href="index.html#team">Team</a>
       <a href="index.html#contact">Contact</a>
     </nav>
-    <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span class="bar bar-top"></span>
-      <span class="bar bar-mid"></span>
-      <span class="bar bar-bot"></span>
-    </button>
+    <div class="nav-actions">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M18.8 5.2l-1.6 1.6M17.2 17.2l1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="bar bar-top"></span>
+        <span class="bar bar-mid"></span>
+        <span class="bar bar-bot"></span>
+      </button>
+    </div>
   </div>
   <div class="mobile-menu" id="mobile-menu" hidden>
     <div class="wrap">
@@ -1533,6 +1534,30 @@
         closeLightbox();
       }
     });
+
+    // Theme toggle. Light is the default regardless of the OS setting; an explicit
+    // choice is stored and applied before paint by the script in <head>.
+    (function () {
+      var root = document.documentElement;
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      function paint(theme) {
+        var dark = theme === 'dark';
+        root.setAttribute('data-theme', dark ? 'dark' : 'light');
+        btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+        btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', dark ? '#160F1C' : '#3B1F4E');
+      }
+      var saved = null;
+      try { saved = localStorage.getItem('co-theme'); } catch (e) {}
+      paint(saved === 'dark' ? 'dark' : 'light');
+      btn.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        paint(next);
+        try { localStorage.setItem('co-theme', next); } catch (e) {}
+      });
+    })();
 
     // Mobile Navigation Toggle
     (function () {
